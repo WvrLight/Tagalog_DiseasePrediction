@@ -1,0 +1,27 @@
+result,hirap sa paghinga,pagsikip sa dibdib,ubo,pag-aagahas,pamumula sa balat,kati,pantal,kumapal yung balat,sensitibo,magaspang ang balat,dugo sa plema,nabawasan ang timbang,nanghina ang katawan,nagpapawis tuwing gabi,nawalan ng gana kumain,nilalamig,lagnat,masakit ang katawan,masakit ang ulo,nagsusuka,hilo,ubong may plema,pagkawala ng panlasa,pagkawala ng pang amoy,barado ang ilong,masakit ang batok,paglabo ng paningin,sakit ng tiyan,mabilis na tibok ng puso,masakit na pag-nguya,pamamaga nggilagid,hirap sa pag-utot,pananakit sa kanang tagiliran,pananakit ng kalamnan,pananakit ng kasu-kasuan,matamlay,matagal na pag-galing ng sugat,madalas umihi,madalas ang pagdumi
+asthma,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+eczema,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+flu,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,,,,,,,,,,,,,,,,,,
+pneumonia,0,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+pananakit ng tadyang (rib pain),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+dysmenorrhea,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+pneumonia,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+diabetes,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+eczema,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+diarrhea,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+acid reflux,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+asthma,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+tubercolosis,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,,,,,,,,,,,,,,,,,,,,,,,,
+flu,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+altapresyon,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+diarrhea,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0
+toothache,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+appendicitis,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0
+dengue,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0
+diabetes,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0
+migraine,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+diarrhea,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1
+asthma,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+covid 19,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+covid 19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+covid 19,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0

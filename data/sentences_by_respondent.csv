@@ -1,0 +1,59 @@
+respondent_idx,sentence,result
+1,Ako ay nakakaranas ng hirap sa paghinga pagkatapos tumakbo o kaya pagtapos ng mahabang lakaran.,asthma
+1,Mayroon ding pagsikip sa aking dibdib at nakakaranas din ng pag-ubo.,asthma
+2,"Nagkaroon po ako ng pamumula sa balat, saka makati po ito.",eczema
+2,"Nagkapantal po, tapos parang kumakapal na rin yung balat.",eczema
+2,Sensitibo na rin po siguro at magaspang ang balat.,eczema
+3,Nilalamig dahil sa lagnat at masakit ang katawan.,flu
+3,"Masakit ang ulo, nagsusuka at madalas nahihilo.",flu
+4,"Mataas ang lagnat, inuubong may plema, nahihilo, at nagsusuka.",pneumonia
+4,Mabilis ang takbo ng puso at nanginginig.,pneumonia
+5,Nahihirapan kapag humihinga nang malalim.,pananakit ng tadyang (rib pain)
+5,Masakit at maraming pasa sa tadyang.,pananakit ng tadyang (rib pain)
+5,Nahihirapan din sa pagtulog.,pananakit ng tadyang (rib pain)
+6,Nagsusuka at nagtatae.,dysmenorrhea
+6,"Nakararamdam din ng pagkahilo, panghihina at sakit sa ulo.",dysmenorrhea
+7,May plema ang ubo at nilalagnat.,pneumonia
+7,Masakit ang dibdib at mabilis ang pagtakbo ng puso.,pneumonia
+8,Maya't mayang nakakaramdam ng gutom at uhaw.,diabetes
+8,Madalas ang pagkain nang marami at pag-ihi.,diabetes
+8,"Malaki ang nabawas sa timbang, laging nanghihina at matamlay.",diabetes
+9,Namumula at makati ang balat sa likod.,eczema
+9,Magaspang at makapal sa pakiramdam.,eczema
+10,Nagsusuka at masakit ang tiyan.,diarrhea
+10,Madalas ang pagdumi ng basa o parang tubig.,diarrhea
+11,Madalas akong magsuka at maasim ang panlasa.,acid reflux
+11,Masakit ang aking lalamunan at lagi ang pagdighay.,acid reflux
+12,Laging inuubo at naninikip ang dibdib ko.,asthma
+12,Halos lagi din na kapos sa paghinga.,asthma
+13,Hirap ako sa paghinga tapos may halong dugo sa plema ko.,tubercolosis
+13,Nabawasan ang timbang tapos nanghina ang katawan.,tubercolosis
+13,Nagpapawis tuwing gabi tapos nawalan din ng gana kumain.,tubercolosis
+14,Nanghihina at sumasakit ang katawan.,flu
+14,Masakit ang ulo at nanlalamig.,flu
+15,Masakit ang batok at nahihilo.,altapresyon
+15,Masakit na ulo at paglabo ng paningin.,altapresyon
+16,Pananakit ng tiyan at pagsusuka.,diarrhea
+16,Nilalagnat at mabilis na tibok ng puso.,diarrhea
+16,Nahihilo at nanghihina.,diarrhea
+17,Pananakit ng ulo at nilalagnat.,toothache
+17,Masakit na pag-nguya at pamamaga ng gilagid.,toothache
+18,Nagsusuka at walang gana kumain.,appendicitis
+18,Hirap sa pag-utot at pananakit sa kanang tagiliran.,appendicitis
+19,"Mataas na lagnat, pamamantal, at madaling pag-papasa.",dengue
+19,"Malubhang pananakit ng ulo, pananakit ng kalamnan, at pananakit ng kasu-kasuan.",dengue
+19,"Pananamlay, pagkahilo, at pagsusuka.",dengue
+20,"Matamlay, nanghihina, at madalas umihi.",diabetes
+20,Matagal na pag-galing ng sugat at nabawasn ang timbang.,diabetes
+21,Pumipintig ang ulo at matinding pananakit ng ulo.,migraine
+21,Nahihilo at nagsusuka.,migraine
+22,Madalas po ang pagsakit ng aking tiyan.,diarrhea
+22,Madalas din po ang pagdumi ko tapos nabawasan ang timbang.,diarrhea
+23,Mula nung sabado nag-umpisa yung pag-ubo ko saka hirap sa paghinga.,asthma
+23,Nakaranas din ng pag-aagahas.,asthma
+24,Mayroong lagnat at nakakaranas ng hirap sa paghinga.,covid 19
+24,"Mga tatlong araw na yung pagkawala ng panlasa, pati pagkawala ng pang amoy.",covid 19
+25,Nawalan ako ng panlasa at nawalan din ng pang amoy kasi barado rin ang aking ilong.,covid 19
+25,Nagkaroon ng lagnat pagkagaling sa mall.,covid 19
+26,Biglaan ang lagnat at ang pagkawala ng pang amoy at pagkawala ng panlasa.,covid 19
+26,"Tapos nanghina ang aking katawan, hirap sa paghinga, barado rin ang ilong, at nahihilo pa ako.",covid 19
