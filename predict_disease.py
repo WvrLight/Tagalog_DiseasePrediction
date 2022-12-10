@@ -2,6 +2,9 @@
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import LSTM, GRU, Embedding, Bidirectional
+from tf2crf import CRF, ModelWithCRFLoss
 from TglStemmer import stemmer
 import re
 from nltk import word_tokenize
@@ -30,6 +33,7 @@ with open("{}/{}.json".format(folder_name, "disease_list")) as json_file:
 with open("{}/{}.json".format(folder_name, "stopwords-tl")) as json_file:
     stopwords = json.load(json_file)
 
+PERCENTAGE_LOWER_LIMIT = 0.2
 
 # MAIN FUNCTION
 
@@ -82,11 +86,64 @@ def predict_disease(ner_model, classification_model, raw_text, preprocessing_opt
 
     disease_results = {}
     for key, val in disease_list.items():
-        disease_results.update({key: rounded_results[0][val - 2]})
+        if (val < len(rounded_results[0]) and rounded_results[0][val] > PERCENTAGE_LOWER_LIMIT):
+            disease_results.update({key: rounded_results[0][val]})
 
+    print(rounded_results[0])
     return symptom_results, disease_results
 
 # FUNCTIONS
+
+
+def load_models(model_type):
+    import pickle
+
+    # ner_model = tf.keras.models.load_model(model_path)
+    ner_model = initialize_ner(model_type)
+    ner_model.summary()
+
+    with open('naiveBayes.pkl', 'rb') as f:
+        naiveBayes = pickle.load(f)
+
+    return ner_model, naiveBayes
+
+def initialize_ner(model_type):
+    inputs = tf.keras.layers.Input(shape=(None,), dtype='int32')
+    output = Embedding(ner_config['n_words'], ner_config['word_embedding_size'],
+                       trainable=True, mask_zero=True)(inputs)
+    if (model_type == 'lstm'):
+        bi_rnn = Bidirectional(LSTM(units=ner_config['word_embedding_size'],
+                                    return_sequences=True,
+                                    dropout=0.5,
+                                    recurrent_dropout=0.5,
+                                    kernel_initializer=tf.keras.initializers.he_normal()))(output)
+        rnn = LSTM(units=ner_config['word_embedding_size'] * 2,
+                   return_sequences=True,
+                   dropout=0.5,
+                   recurrent_dropout=0.5,
+                   kernel_initializer=tf.keras.initializers.he_normal())(bi_rnn)
+    else:
+        bi_rnn = Bidirectional(GRU(units=ner_config['word_embedding_size'],
+                                   return_sequences=True,
+                                   dropout=0.5,
+                                   recurrent_dropout=0.5,
+                                   kernel_initializer=tf.keras.initializers.he_normal()))(output)
+        rnn = GRU(units=ner_config['word_embedding_size'] * 2,
+                  return_sequences=True,
+                  dropout=0.5,
+                  recurrent_dropout=0.5,
+                  kernel_initializer=tf.keras.initializers.he_normal())(bi_rnn)
+    crf = CRF(units=ner_config['n_tags'], dtype='float32')
+    output = crf(rnn)
+    base_model = Model(inputs, output)
+    ner_model = ModelWithCRFLoss(base_model, sparse_target=True)
+    ner_model.build(ner_config['shape'])
+
+    if (model_type == 'lstm'):
+        ner_model.load_weights("bilstm")
+    else:
+        ner_model.load_weights("bigru")
+    return ner_model
     
 def remove_stopwords(tokenizedSentence):
     for stopword in stopwords:
@@ -112,28 +169,12 @@ def convert_sentence_to_idx(tokenizedSentence):
         sentence2idx.append(END_IDX)
     return sentence2idx
 
-def load_models(model_type):
-    import pickle
-
-    with open('naiveBayes.pkl', 'rb') as f:
-        naiveBayes = pickle.load(f)
-
-    if (model_type == 'lstm'):
-        model_path = 'bilstm.h5'
-    elif (model_type == 'gru'):
-        model_path = 'bigru.h5' 
-
-    ner_model = tf.keras.models.load_model(model_path)
-    ner_model.summary()
-
-    return ner_model, naiveBayes
-
 # For a given sentence, predict the words which are related to symptom information
 def recognize_symptoms_in_sentence(ner_model, sentence2idx, tokenizedSentence):
     I_TAG_INDEX = 0
 
     p = ner_model.predict(np.array([sentence2idx]))
-    p = np.argmax(p, axis=-1)
+    #p = np.argmax(p, axis=-1)
 
     input_symptom_list = []
 
@@ -166,7 +207,7 @@ def symptoms_to_boolean(input_symptom_list):
     for symptom in symptom_list:
         symptomInList = False
         for input_symptom in input_symptom_list:
-            if (input_symptom in symptom or SequenceMatcher(None, input_symptom, symptom).ratio() >= STRING_MATCH_PERCENTAGE):
+            if (symptom in input_symptom or SequenceMatcher(None, input_symptom, symptom).ratio() >= STRING_MATCH_PERCENTAGE):
                 symptomInList = True
         if (symptomInList):
             input_to_boolean.append(1)

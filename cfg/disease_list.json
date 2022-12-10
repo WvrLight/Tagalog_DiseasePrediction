@@ -1,1 +1,1 @@
-{"flu": 0, "tubercolosis": 1, "altapresyon": 2, "diarrhea": 3, "toothache": 4, "appendicitis": 5, "dengue": 6, "diabetes": 7, "migraine": 8, "asthma": 9, "covid 19": 10}
+{"asthma": 0, "flu": 1, "pneumonia": 2, "diarrhea": 3, "dysmenorrhea": 4, "tubercolosis": 5, "covid 19": 6, "dengue": 7}

@@ -98,8 +98,7 @@ def stemmer(mode, source, info_dis):
 	for token in tokens:		
 		word_info["word"] = token
 		
-		if (PERIOD_FLAG == True and token[0].isupper()) or \
-			(PERIOD_FLAG == False and token[0].islower()):
+		if (PERIOD_FLAG == True and token[0].isupper()) or (PERIOD_FLAG == False and token[0].islower()):
 
 			token 	 = token.lower()		
 			du1_stem = clean_duplication(token, DUPLICATE)

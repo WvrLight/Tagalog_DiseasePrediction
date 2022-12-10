@@ -1,5 +1,9 @@
 # Misc
 Thesis_GanttChart.xlsx
+bilstm.h5
+bigru.h5
+naiveBayes.pkl
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -130,3 +134,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+bilstm.index
+bilstm.data-00000-of-00001
+bigru.index
+.gitignore
+naiveBayes.pkl
+bilstm.h5.bak
+bilstm.h5
+checkpoint
+bigru.h5
+bigru.data-00000-of-00001

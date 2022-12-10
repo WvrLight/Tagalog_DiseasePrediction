@@ -1,1 +1,1 @@
-{"n_tags": 4, "n_words": 190, "maxlen": 19}
+{"n_tags": 3, "n_words": 77, "maxlen": 8, "shape": [48, 8], "word_embedding_size": 300}
