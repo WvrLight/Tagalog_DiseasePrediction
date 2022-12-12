@@ -35,8 +35,9 @@ with open("{}/{}.json".format(folder_name, "stopwords-tl")) as json_file:
 
 PERCENTAGE_LOWER_LIMIT = 0.2
 
-# MAIN FUNCTION
+# FUNCTIONS
 
+# Given an NER model (tensorflow-keras) and classifier model (sklearn), and sentence input, extract the symptoms from the sentence input and predict possible diseases 
 def predict_disease(ner_model, classification_model, raw_text, preprocessing_option):
     # Load the models
     #ner_model, classification_model = load_models()
@@ -92,9 +93,7 @@ def predict_disease(ner_model, classification_model, raw_text, preprocessing_opt
     print(rounded_results[0])
     return symptom_results, disease_results
 
-# FUNCTIONS
-
-
+# Loads the two learning models
 def load_models(model_type):
     import pickle
 
@@ -107,6 +106,7 @@ def load_models(model_type):
 
     return ner_model, naiveBayes
 
+# Lays out the architecture for the RNN, and then loads the weights from the training data.
 def initialize_ner(model_type):
     inputs = tf.keras.layers.Input(shape=(None,), dtype='int32')
     output = Embedding(ner_config['n_words'], ner_config['word_embedding_size'],
@@ -144,7 +144,8 @@ def initialize_ner(model_type):
     else:
         ner_model.load_weights("bigru")
     return ner_model
-    
+
+# Removes the stopwords in a given sentence. Requires a list with the expected stopwords.    
 def remove_stopwords(tokenizedSentence):
     for stopword in stopwords:
         for word in tokenizedSentence:
@@ -152,6 +153,7 @@ def remove_stopwords(tokenizedSentence):
                 tokenizedSentence.remove(word)
     return tokenizedSentence
 
+# Converts a tokenized sentence's words to their respective IDs according to trained data
 def convert_sentence_to_idx(tokenizedSentence):
     END_IDX = ner_config["n_words"] - 2
     UNK_IDX = ner_config["n_words"] - 1
@@ -171,7 +173,7 @@ def convert_sentence_to_idx(tokenizedSentence):
 
 # For a given sentence, predict the words which are related to symptom information
 def recognize_symptoms_in_sentence(ner_model, sentence2idx, tokenizedSentence):
-    I_TAG_INDEX = 0
+    I_TAG_INDEX = 2
 
     p = ner_model.predict(np.array([sentence2idx]))
     #p = np.argmax(p, axis=-1)
@@ -185,7 +187,7 @@ def recognize_symptoms_in_sentence(ner_model, sentence2idx, tokenizedSentence):
 
             # Check for additional words for a symptom
             temp_idx = idx + 1
-            if (temp_idx < (len(tokenizedSentence) - 1) and p[0][temp_idx] == I_TAG_INDEX):
+            if temp_idx < len(tokenizedSentence) and p[0][temp_idx] == I_TAG_INDEX:
                 while (p[0][temp_idx] == I_TAG_INDEX):
                     symptom_word = symptom_word + " " + tokenizedSentence[temp_idx]
                     if (temp_idx != len(tokenizedSentence) - 1):

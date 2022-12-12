@@ -11,6 +11,7 @@ root.resizable(False, False)
 
 sv_ttk.use_light_theme()
 
+DISEASES_AMOUNT = 5
 global ner_model, classification_model
 ner_model, classification_model = load_models('lstm')
 
@@ -18,13 +19,46 @@ def predict_using_input():
     symptoms, diseases = predict_disease(ner_model, classification_model, input_text.get(), preprocessing_option.get())
 
     #print(symptoms, diseases)
-    symptom_label.configure(text=symptoms)
-    disease_label.configure(text=str(diseases))
 
-    # Get highest percentage disease
-    sorted_disease_list = {key: val for key, val in sorted(diseases.items(), key = lambda x: x[1], reverse = True)}
-    most_likely_disease = list(sorted_disease_list)[0]
-    #print(most_likely_disease)
+    symptom_text = ""
+    disease_text = []
+    if (len(symptoms) > 0):
+        # Get all symptoms
+        for i in range(len(symptoms)):
+            if (i < len(symptoms) - 1):
+                symptom_text += symptoms[i] + ", "
+            else:
+                symptom_text += symptoms[i]
+
+        # Get highest percentage disease
+        sorted_disease_dict = {key: val for key, val in sorted(diseases.items(), key = lambda x: x[1], reverse = True)}
+
+        disease_names = list(sorted_disease_dict)
+        disease_list_len = len(disease_names)
+        disease_probabilities = list(sorted_disease_dict.values())
+        for i in range(disease_list_len):
+            disease_probabilities[i] = round(disease_probabilities[i] * 100, 2)
+            disease_text.append(str(disease_names[i]).capitalize() + ": " + str(disease_probabilities[i]) + "%")
+
+        most_likely_disease = disease_names[0]
+        most_likely_disease_percentage = disease_probabilities[0]
+    else:
+        disease_list_len = 1
+        disease_text.append("No diseases predicted!")
+        most_likely_disease = "None"
+
+    # Reset text
+    for i in range(len(disease_label_list)):
+        if (i < DISEASES_AMOUNT):
+            disease_label_list[i].configure(text="")
+
+    # Change UI text
+    symptom_label.configure(text=symptom_text)
+
+    for i in range(disease_list_len):
+        if (i < DISEASES_AMOUNT):
+            disease_label_list[i].configure(text=(disease_text[i]))
+
     likely_disease_name.configure(text=most_likely_disease)
     disease_description_label.configure(text=get_disease_description(most_likely_disease))
 
@@ -35,8 +69,8 @@ def reload_model():
 def get_disease_description(disease_name):
     import json
 
-    with open("{}/{}.json".format('cfg', "disease_description")) as json_file:
-        disease_description_list = json.load(json_file, encoding="utf8")
+    with open("{}/{}.json".format('cfg', "disease_description"), encoding="utf8") as json_file:
+        disease_description_list = json.load(json_file)
     
     if disease_name in disease_description_list:
         return disease_description_list[disease_name]
@@ -99,7 +133,7 @@ likely_disease_label = ttk.Label(root, text="Most Likely Disease: ")
 likely_disease_label.place(x=100, y=265)
 
 likely_disease_name = ttk.Label(root, wraplength=275)
-likely_disease_name.place(x=150, y=265)
+likely_disease_name.place(x=250, y=265)
 
 # Symptoms Detected
 
@@ -107,15 +141,18 @@ symptom_frame = ttk.LabelFrame(root, text='Sintomas', labelanchor=tk.NW)
 symptom_frame.place(relx=0.05, rely=0.925, anchor=tk.SW, width=175, height=200)
 
 symptom_label = ttk.Label(symptom_frame, wraplength=125)
-symptom_label.place(x=15, y=15)
+symptom_label.place(x=15, y=5)
 
 # Disease List
 
 disease_frame = ttk.LabelFrame(root, text='Mga Posibleng Sakit', labelanchor=tk.NW)
 disease_frame.place(relx=0.28, rely=0.925, anchor=tk.SW, width=250, height=200)
 
-disease_label = ttk.Label(disease_frame, wraplength=200)
-disease_label.place(x=15, y=15)
+disease_label_list = []
+while (len(disease_label_list) < DISEASES_AMOUNT):
+    disease_label = ttk.Label(disease_frame, wraplength=200)
+    disease_label.place(x=15, y=5 + (len(disease_label_list) * 20))
+    disease_label_list.append(disease_label)
 
 # Disease Description
 
@@ -124,6 +161,6 @@ disease_description_frame.place(anchor=tk.SE, relx=0.925, rely=0.925, width=300,
 
 disease_description_text = tk.StringVar()
 disease_description_label = ttk.Label(disease_description_frame, wraplength=275)
-disease_description_label.place(x=15, y=15)
+disease_description_label.place(x=15, y=5)
 
 root.mainloop()

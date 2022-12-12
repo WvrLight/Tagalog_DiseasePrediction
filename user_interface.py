@@ -3,13 +3,9 @@ import ttkbootstrap as ttk
 from predict_disease import load_models
 from predict_disease import predict_disease
 
-import sv_ttk
-
 root = ttk.Window(themename="yeti")
 root.title("Sintomask")
 root.resizable(False, False)
-
-# sv_ttk.use_light_theme()
 
 # Global Options
 
@@ -20,55 +16,61 @@ model_option = 'gru'
 preprocessing_option = 1
 ner_model, classification_model = load_models(model_option)
 
-# Styles
-
-#BG_COLOR = "#f5f5f5"
-#INFO_COLOR = "#5bc0de"
-# style = ttk.Style()
-# style.configure('TLabelframe', background='#99d9d9')
-
+# Retrieve the input from the interface and display the results of the NER + classification model
 def predict_using_input():
     symptoms, diseases = predict_disease(ner_model, classification_model, input_text.get(), preprocessing_option)
 
     #print(symptoms, diseases)
 
-    # Get highest percentage disease
-    sorted_disease_dict = {key: val for key, val in sorted(diseases.items(), key = lambda x: x[1], reverse = True)}
+    symptom_text = ""
+    disease_text = []
+    if (len(symptoms) > 0):
+        # Get all symptoms
+        for i in range(len(symptoms)):
+            if (i < len(symptoms) - 1):
+                symptom_text += symptoms[i] + ", "
+            else:
+                symptom_text += symptoms[i]
 
-    disease_names = list(sorted_disease_dict)
-    disease_probabilities = list(sorted_disease_dict.values())
-    for i in range(len(disease_probabilities)):
-        disease_probabilities[i] = round(disease_probabilities[i] * 100, 2)
+        # Get highest percentage disease
+        sorted_disease_dict = {key: val for key, val in sorted(diseases.items(), key = lambda x: x[1], reverse = True)}
 
-    most_likely_disease = disease_names[0]
-    most_likely_disease_percentage = disease_probabilities[0]
+        disease_names = list(sorted_disease_dict)
+        disease_list_len = len(disease_names)
+        disease_probabilities = list(sorted_disease_dict.values())
+        for i in range(disease_list_len):
+            disease_probabilities[i] = round(disease_probabilities[i] * 100, 2)
+            disease_text.append(str(disease_names[i]).capitalize() + ": " + str(disease_probabilities[i]) + "%")
 
-    # Change UI text
-    all_symptoms = ""
-    for i in range(len(symptoms)):
-        if (i < len(symptoms) - 1):
-            all_symptoms += symptoms[i] + ", "
-        else:
-            all_symptoms += symptoms[i]
-    symptom_label.configure(text=all_symptoms)
+        most_likely_disease = disease_names[0]
+        most_likely_disease_percentage = disease_probabilities[0]
+    else:
+        disease_list_len = 1
+        disease_text.append("No diseases predicted!")
+        most_likely_disease = "None"
 
-    # Reset disease text first
+    # Reset text
     for i in range(len(disease_label_list)):
         if (i < DISEASES_AMOUNT):
             disease_label_list[i].configure(text="")
 
-    for i in range(len(disease_names)):
+    # Change UI text
+    symptom_label.configure(text=symptom_text)
+
+    for i in range(disease_list_len):
         if (i < DISEASES_AMOUNT):
-            disease_label_list[i].configure(text=(str(disease_names[i]).capitalize() + ": " + str(disease_probabilities[i]) + "%"))
+            disease_label_list[i].configure(text=(disease_text[i]))
 
     likely_disease_name.configure(text=most_likely_disease)
     likely_disease_meter.configure(amountused=most_likely_disease_percentage)
     disease_description_label.configure(text=get_disease_description(most_likely_disease))
 
+# Reloads the model based on the type of NER model selected. NOT USED IN USER INTERFACE!
 def reload_model():
     global ner_model, classification_model
     ner_model, classification_model = load_models(model_option.get())
 
+# Retrieve the appopriate description from the disease JSON
 def get_disease_description(disease_name):
     import json
 
@@ -79,6 +81,20 @@ def get_disease_description(disease_name):
         return disease_description_list[disease_name]
     else: 
         return "Disease description not found."
+
+# Clears the UI
+def clear_outputs():
+    input_text.set("")
+    symptom_label.configure(text="")
+    likely_disease_name.configure(text="")
+    likely_disease_meter.configure(amountused=0)
+    disease_description_label.configure(text="")
+
+    for i in range(len(disease_label_list)):
+        if (i < DISEASES_AMOUNT):
+            disease_label_list[i].configure(text="")
+
+########### USER INTERFACE ELEMENTS ###########
 
 # Window Size
 window_width = 900
@@ -160,5 +176,9 @@ disease_description_frame.place(anchor=tk.SE, relx=0.925, rely=0.925, width=300,
 disease_description_text = tk.StringVar()
 disease_description_label = ttk.Label(disease_description_frame, wraplength=275)
 disease_description_label.place(x=15, y=5)
+
+# Clear
+button_clear = ttk.Button(root, text="Clear", bootstyle="secondary", command=clear_outputs)
+button_clear.place(relx=0.87, rely=0.96, anchor=tk.CENTER, width=100, height=30)
 
 root.mainloop()

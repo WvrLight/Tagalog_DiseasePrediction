@@ -26,7 +26,7 @@ def preprocess_sentence(sentence):
 
 
 #inputSentence = input("Enter sentence with symptom descriptions: ")
-inputSentence = "Sensitibo na rin po siguro at magaspang ang balat."
+inputSentence = "Ako ay inuubo at masakit ang ulo."
 inputSentence = inputSentence.lower()
 
 preprocess_sentence(inputSentence)
